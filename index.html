@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming Languages Midterm Exam</title>
+    <style>
+    :root {
+        --bg-color: #f8fafc;
+        --text-color: #161b24;
+        --primary-color: #2a676f;
+        --secondary-color: #a98a50;
+        --card-bg: rgba(255, 255, 255, 0.95);
+        --border-color: rgba(224, 224, 224, 0.5);
+        --option-bg: #f8fafc;
+        --option-hover-bg: #e2e8f0;
+        --quiz-header-bg: linear-gradient(135deg, #2a676f 0%, #3a8893 100%);
+        --correct-bg: #e8f5e9;
+        --correct-border: #43a047;
+        --incorrect-bg: #ffebee;
+        --incorrect-border: #e53935;
+        --gradient-color: rgba(42, 103, 111, 0.03);
+        --background-pattern: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%232a676f' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    [data-theme="dark"] {
+        --bg-color: #1a202c;
+        --text-color: #ffffff;
+        --primary-color: #38b2ac;
+        --secondary-color: #f6ad55;
+        --card-bg: rgba(26, 32, 44, 0.95);
+        --border-color: rgba(74, 85, 104, 0.5);
+        --option-bg: rgba(160, 174, 192, 0.1);
+        --option-hover-bg: rgba(160, 174, 192, 0.2);
+        --quiz-header-bg: linear-gradient(135deg, #2a676f 0%, #3a8893 100%);
+        --correct-bg: #1a3c27;
+        --correct-border: #43a047;
+        --incorrect-bg: #3c1a1d;
+        --incorrect-border: #e53935;
+        --gradient-color: transparent;
+        --background-pattern: none;
+    }
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    body {
+        background-color: var(--bg-color);
+        background-image: 
+            linear-gradient(to right, var(--gradient-color) 1px, transparent 1px),
+            linear-gradient(to bottom, var(--gradient-color) 1px, transparent 1px),
+            var(--background-pattern);
+        background-size: 
+            40px 40px,
+            40px 40px,
+            52px 26px;
+        color: var(--text-color);
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .quiz-container {
+        max-width: 800px;
+        margin: 2rem auto;
+        padding: 2rem;
+        background: var(--card-bg);
+        border-radius: 20px;
+        box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+        border: 1px solid var(--border-color);
+        backdrop-filter: blur(12px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .footer-note {
+        text-align: center;
+        margin: 3rem 0 1rem;
+        padding: 1.5rem;
+        color: var(--primary-color);
+        font-size: 1.1rem;
+        border-top: 2px solid rgba(42, 103, 111, 0.1);
+        opacity: 0.9;
+    }
+
+    [data-theme="dark"] .footer-note {
+        color: var(--secondary-color);
+        border-color: rgba(169, 138, 80, 0.2);
+    }
+
+    .section-divider {
+        margin: 3rem 0;
+        border: 0;
+        height: 4px;
+        background: var(--primary-color);
+        opacity: 0.2;
+        border-radius: 2px;
+    }
+
+    .section-header {
+        background: var(--quiz-header-bg);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        margin: 2.5rem 0;
+        font-size: 1.8rem;
+        font-weight: 700;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(42, 103, 111, 0.2);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .section-header::after {
+        content: '💻';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.15;
+        font-size: 2.5rem;
+    }
+
+    .quiz-container::before {
+        content: '💻🧠📚';
+        position: absolute;
+        top: -50px;
+        right: -50px;
+        font-size: 120px;
+        opacity: 0.05;
+        transform: rotate(15deg);
+        z-index: 0;
+    }
+
+    .quiz-header {
+        text-align: center;
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        color: white;
+        padding: 1.5rem;
+        background: var(--quiz-header-bg);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(42, 103, 111, 0.2);
+        position: relative;
+        overflow: hidden;
+        transform: translateY(-5px);
+    }
+
+    .quiz-header::after {
+        content: '💻';
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0.15;
+        font-size: 3rem;
+    }
+
+    .controls {
+        text-align: center;
+        margin-bottom: 2rem;
+        display: flex;
+        gap: 1rem;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 1rem 2rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        gap: 8px;
+        box-shadow: 0 4px 6px rgba(42, 103, 111, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        transition: 0.5s;
+    }
+
+    .btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 15px rgba(42, 103, 111, 0.2);
+        background: var(--secondary-color);
+    }
+
+    .btn:hover::before {
+        left: 100%;
+    }
+
+    .question {
+        margin-bottom: 2.5rem;
+        padding: 1.5rem;
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        position: relative;
+        overflow: visible;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+
+    .question::before {
+        content: '🤔';
+        position: absolute;
+        left: -30px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--primary-color);
+        font-size: 1.8rem;
+        opacity: 0.8;
+        z-index: 1;
+        transition: all 0.3s ease;
+        pointer-events: none;
+    }
+
+    .question:hover {
+        transform: translateX(10px);
+        border-color: var(--primary-color);
+        box-shadow: 6px 6px 20px rgba(42, 103, 111, 0.1);
+    }
+
+    .question:hover::before {
+        transform: translateY(-50%) rotate(360deg) scale(1.2);
+        left: -35px;
+        color: var(--secondary-color);
+    }
+
+    .options label {
+        display: flex;
+        align-items: center;
+        padding: 1.2rem;
+        margin: 1rem 0;
+        background: var(--option-bg);
+        border-radius: 12px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        gap: 12px;
+        border: 2px solid transparent;
+        position: relative;
+        z-index: 2;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .options label:hover {
+        background: var(--option-hover-bg);
+        transform: translateX(5px);
+        box-shadow: 4px 4px 12px rgba(42, 103, 111, 0.1);
+    }
+
+    .options input[type="radio"] {
+        margin-left: 1rem;
+        transform: scale(1.4);
+        accent-color: var(--primary-color);
+        cursor: pointer;
+    }
+
+    .answer-box {
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+        padding: 1.2rem;
+        border-radius: 12px;
+        display: none;
+        animation: fadeIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        font-weight: 500;
+        letter-spacing: 0.3px;
+        position: relative;
+        z-index: 2;
+        border-left: 5px solid;
+        white-space: normal;
+        word-wrap: break-word;
+        overflow-wrap: break-word;
+    }
+
+    .correct {
+        background: var(--correct-bg);
+        border-color: var(--correct-border);
+        color: var(--text-color);
+    }
+
+    .correct::before {
+        content: '✅';
+        margin-right: 10px;
+    }
+
+    .incorrect {
+        background: var(--incorrect-bg);
+        border-color: var(--incorrect-border);
+        color: var(--text-color);
+    }
+
+    .incorrect::before {
+        content: '❌';
+        margin-right: 10px;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 600px) {
+        .quiz-container {
+            margin: 1rem;
+            padding: 1.5rem;
+            border-radius: 15px;
+        }
+        
+        .quiz-header {
+            font-size: 1.8rem;
+            padding: 1rem;
+        }
+        
+        .question::before {
+            display: none;
+        }
+        
+        .btn {
+            width: 100%;
+            margin: 0.5rem 0;
+        }
+        
+        .sub-question {
+            margin-top: 1rem;
+            padding-top: 1rem;
+        }
+    }
+</style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            Programming Languages Midterm Exam
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="resetQuiz()"> Reset</button>
+            <button class="btn" onclick="showAllAnswers()"> Show Answers</button>
+            <button class="btn" onclick="hideAllAnswers()"> Hide Answers</button>
+            <button class="btn" id="themeToggle" onclick="toggleTheme()">🌙 Dark Mode</button>
+        </div>
+
+        <!-- Questions 1-10 -->
+        <div class="question">
+            <h3>1. Why we need to choose the right programming language?</h3>
+            <div class="options">
+                <label><input type="radio" name="q1" value="a"> a) It impacts performance, readability, and maintenance</label>
+                <label><input type="radio" name="q1" value="b"> b) It ensures code runs on every device automatically</label>
+                <label><input type="radio" name="q1" value="c"> c) It helps skip debugging and testing steps</label>
+                <label><input type="radio" name="q1" value="d"> d) It makes syntax errors impossible</label>
+            </div>
+            <div class="answer-box" id="answer1" data-correct-answer="a">Correct Answer: a) It impacts performance, readability, and maintenance</div>
+        </div>
+
+        <div class="question">
+            <h3>2. Why are language evaluation criteria controversial?</h3>
+            <div class="options">
+                <label><input type="radio" name="q2" value="a"> a) Opinions and needs differ</label>
+                <label><input type="radio" name="q2" value="b"> b) All compilers are the same</label>
+                <label><input type="radio" name="q2" value="c"> c) Syntax never changes</label>
+                <label><input type="radio" name="q2" value="d"> d) Languages are identical</label>
+            </div>
+            <div class="answer-box" id="answer2" data-correct-answer="a">Correct Answer: a) Opinions and needs differ</div>
+        </div>
+
+        <div class="question">
+            <h3>3. What is a disadvantage of too much orthogonality?</h3>
+            <div class="options">
+                <label><input type="radio" name="q3" value="a"> a) It makes programs shorter</label>
+                <label><input type="radio" name="q3" value="b"> b) It improves execution speed</label>
+                <label><input type="radio" name="q3" value="c"> c) It allows meaningless combinations</label>
+                <label><input type="radio" name="q3" value="d"> d) It increases readability</label>
+            </div>
+            <div class="answer-box" id="answer3" data-correct-answer="c">Correct Answer: c) It allows meaningless combinations</div>
+        </div>
+
+        <div class="question">
+            <h3>4. Two major problems found in the 1970s were:</h3>
+            <div class="options">
+                <label><input type="radio" name="q4" value="a"> a) No data abstraction</label>
+                <label><input type="radio" name="q4" value="b"> b) No control structures</label>
+                <label><input type="radio" name="q4" value="c"> c) Limited hardware memory</label>
+                <label><input type="radio" name="q4" value="d"> d) Both a and b</label>
+            </div>
+            <div class="answer-box" id="answer4" data-correct-answer="d">Correct Answer: d) Both a and b</div>
+        </div>
+
+        <div class="question">
+            <h3>5. The three fundamental features of OOP are:</h3>
+            <div class="options">
+                <label><input type="radio" name="q5" value="a"> a) Encapsulation, Inheritance, Polymorphism</label>
+                <label><input type="radio" name="q5" value="b"> b) Parsing, Tokenizing, Linking</label>
+                <label><input type="radio" name="q5" value="c"> c) Fetch, Decode, Execute</label>
+                <label><input type="radio" name="q5" value="d"> d) Compilation, Loading, Debugging</label>
+            </div>
+            <div class="answer-box" id="answer5" data-correct-answer="a">Correct Answer: a) Encapsulation, Inheritance, Polymorphism</div>
+        </div>
+
+        <div class="question">
+            <h3>6. What was the first successful scientific programming language?</h3>
+            <div class="options">
+                <label><input type="radio" name="q6" value="a"> a) C</label>
+                <label><input type="radio" name="q6" value="b"> b) FORTRAN</label>
+                <label><input type="radio" name="q6" value="c"> c) COBOL</label>
+                <label><input type="radio" name="q6" value="d"> d) Pascal</label>
+            </div>
+            <div class="answer-box" id="answer6" data-correct-answer="b">Correct Answer: b) FORTRAN</div>
+        </div>
+
+        <div class="question">
+            <h3>7. What was the first successful high-level business programming language?</h3>
+            <div class="options">
+                <label><input type="radio" name="q7" value="a"> a) Java</label>
+                <label><input type="radio" name="q7" value="b"> b) COBOL</label>
+                <label><input type="radio" name="q7" value="c"> c) C++</label>
+                <label><input type="radio" name="q7" value="d"> d) BASIC</label>
+            </div>
+            <div class="answer-box" id="answer7" data-correct-answer="b">Correct Answer: b) COBOL</div>
+        </div>
+
+        <div class="question">
+            <h3>8. Why are C and C++ used for system programming?</h3>
+            <div class="options">
+                <label><input type="radio" name="q8" value="a"> a) They are simple like scripting languages</label>
+                <label><input type="radio" name="q8" value="b"> b) They run without compilation</label>
+                <label><input type="radio" name="q8" value="c"> c) They give speed and low-level hardware control</label>
+                <label><input type="radio" name="q8" value="d"> d) They handle memory automatically</label>
+            </div>
+            <div class="answer-box" id="answer8" data-correct-answer="c">Correct Answer: c) They give speed and low-level hardware control</div>
+        </div>
+
+        <div class="question">
+            <h3>9. Before 1990, most AI applications were developed in:</h3>
+            <div class="options">
+                <label><input type="radio" name="q9" value="a"> a) LISP</label>
+                <label><input type="radio" name="q9" value="b"> b) FORTRAN</label>
+                <label><input type="radio" name="q9" value="c"> c) Ada</label>
+                <label><input type="radio" name="q9" value="d"> d) Python</label>
+            </div>
+            <div class="answer-box" id="answer9" data-correct-answer="a">Correct Answer: a) LISP</div>
+        </div>
+
+        <div class="question">
+            <h3>10. What is the most popular markup language for web development?</h3>
+            <div class="options">
+                <label><input type="radio" name="q10" value="a"> a) JSON</label>
+                <label><input type="radio" name="q10" value="b"> b) XML</label>
+                <label><input type="radio" name="q10" value="c"> c) HTML</label>
+                <label><input type="radio" name="q10" value="d"> d) SGML</label>
+            </div>
+            <div class="answer-box" id="answer10" data-correct-answer="c">Correct Answer: c) HTML</div>
+        </div>
+
+        <div class="question">
+            <h3>11. Why should a programmer learn new programming languages?</h3>
+            <div class="options">
+                <label><input type="radio" name="q11" value="a"> a) To improve adaptability and understand new paradigms</label>
+                <label><input type="radio" name="q11" value="b"> b) To improve the speed of the CPU</label>
+                <label><input type="radio" name="q11" value="c"> c) To reduce syntax rules in old languages</label>
+                <label><input type="radio" name="q11" value="d"> d) To avoid learning software tools like IDEs</label>
+            </div>
+            <div class="answer-box" id="answer11" data-correct-answer="a">Correct Answer: a) To improve adaptability and understand new paradigms</div>
+        </div>
+
+        <div class="question">
+            <h3>12. "Reliability" refers to:</h3>
+            <div class="options">
+                <label><input type="radio" name="q12" value="a"> a) How easy it is to create programs</label>
+                <label><input type="radio" name="q12" value="b"> b) How easy it is to understand programs</label>
+                <label><input type="radio" name="q12" value="c"> c) How dependable and error-free a language is</label>
+                <label><input type="radio" name="q12" value="d"> d) How fast the program executes</label>
+            </div>
+            <div class="answer-box" id="answer12" data-correct-answer="c">Correct Answer: c) How dependable and error-free a language is</div>
+        </div>
+
+        <div class="question">
+            <h3>13. Poor reliability in a programming language leads to higher maintenance costs.</h3>
+            <div class="options">
+                <label><input type="radio" name="q13" value="a"> a) True</label>
+                <label><input type="radio" name="q13" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer13" data-correct-answer="a">Correct Answer: a) True</div>
+        </div>
+
+        <div class="question">
+            <h3>14. Why is the VAX instruction set considered orthogonal?</h3>
+            <div class="options">
+                <label><input type="radio" name="q14" value="a"> a) Each instruction works only with one data type</label>
+                <label><input type="radio" name="q14" value="b"> b) Works with many data types and modes</label>
+                <label><input type="radio" name="q14" value="c"> c) It limits combinations of operands</label>
+                <label><input type="radio" name="q14" value="d"> d) It supports only simple operations</label>
+            </div>
+            <div class="answer-box" id="answer14" data-correct-answer="b">Correct Answer: b) Works with many data types and modes</div>
+        </div>
+
+        <div class="question">
+            <h3>15. What reduces the cost of large software maintenance?</h3>
+            <div class="options">
+                <label><input type="radio" name="q15" value="a"> a) Portability</label>
+                <label><input type="radio" name="q15" value="b"> b) Writability</label>
+                <label><input type="radio" name="q15" value="c"> c) Orthogonality</label>
+                <label><input type="radio" name="q15" value="d"> d) Readability</label>
+            </div>
+            <div class="answer-box" id="answer15" data-correct-answer="d">Correct Answer: d) Readability</div>
+        </div>
+
+        <div class="question">
+            <h3>16. "Writability" refers to:</h3>
+            <div class="options">
+                <label><input type="radio" name="q16" value="a"> a) How easy it is to create programs</label>
+                <label><input type="radio" name="q16" value="b"> b) How easy it is to understand programs</label>
+                <label><input type="radio" name="q16" value="c"> c) How dependable and error-free a language is</label>
+                <label><input type="radio" name="q16" value="d"> d) How fast the program executes</label>
+            </div>
+            <div class="answer-box" id="answer16" data-correct-answer="a">Correct Answer: a) How easy it is to create programs</div>
+        </div>
+
+        <div class="question">
+            <h3>17. Which of the following is not a characteristic of readability?</h3>
+            <div class="options">
+                <label><input type="radio" name="q17" value="a"> a) Data type</label>
+                <label><input type="radio" name="q17" value="b"> b) Type checking</label>
+                <label><input type="radio" name="q17" value="c"> c) Syntax design</label>
+                <label><input type="radio" name="q17" value="d"> d) Orthogonality</label>
+            </div>
+            <div class="answer-box" id="answer17" data-correct-answer="b">Correct Answer: b) Type checking</div>
+        </div>
+
+        <div class="question">
+            <h3>18. Type checking and exception handling are important factors in language:</h3>
+            <div class="options">
+                <label><input type="radio" name="q18" value="a"> a) Reliability</label>
+                <label><input type="radio" name="q18" value="b"> b) Writability</label>
+                <label><input type="radio" name="q18" value="c"> c) Readability</label>
+                <label><input type="radio" name="q18" value="d"> d) All Choices</label>
+            </div>
+            <div class="answer-box" id="answer18" data-correct-answer="a">Correct Answer: a) Reliability</div>
+        </div>
+
+        <div class="question">
+            <h3>19. Training programmers on a complex language has no impact on the overall cost.</h3>
+            <div class="options">
+                <label><input type="radio" name="q19" value="a"> a) True</label>
+                <label><input type="radio" name="q19" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer19" data-correct-answer="b">Correct Answer: b) False</div>
+        </div>
+
+        <div class="question">
+            <h3>20. Aliasing increases reliability by allowing multiple names for the same memory location.</h3>
+            <div class="options">
+                <label><input type="radio" name="q20" value="a"> a) True</label>
+                <label><input type="radio" name="q20" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer20" data-correct-answer="b@@Aliasing can decrease reliability because it allows multiple names for the same memory location, which can lead to unintended side effects.">Correct Answer: b) False<br>Explanation: Aliasing can decrease reliability because it allows multiple names for the same memory location, which can lead to unintended side effects.</div>
+        </div>
+
+        <div class="question">
+            <h3>21. A programming language that is hard to read and write will always increase reliability.</h3>
+            <div class="options">
+                <label><input type="radio" name="q21" value="a"> a) True</label>
+                <label><input type="radio" name="q21" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer21" data-correct-answer="b">Correct Answer: b) False</div>
+        </div>
+
+        <div class="question">
+            <h3>22. Failing to type-check can lead to:</h3>
+            <div class="options">
+                <label><input type="radio" name="q22" value="a"> a) Runtime or logic errors</label>
+                <label><input type="radio" name="q22" value="b"> b) Faster execution</label>
+                <label><input type="radio" name="q22" value="c"> c) No change at all</label>
+                <label><input type="radio" name="q22" value="d"> d) Better readability</label>
+            </div>
+            <div class="answer-box" id="answer22" data-correct-answer="a">Correct Answer: a) Runtime or logic errors</div>
+        </div>
+
+        <div class="question">
+            <h3>23. Which paradigm uses variables, assignments, and loops (like C, Java, JavaScript)?</h3>
+            <div class="options">
+                <label><input type="radio" name="q23" value="a"> a) Functional</label>
+                <label><input type="radio" name="q23" value="b"> b) Imperative</label>
+                <label><input type="radio" name="q23" value="c"> c) Logic</label>
+                <label><input type="radio" name="q23" value="d"> d) Markup</label>
+            </div>
+            <div class="answer-box" id="answer23" data-correct-answer="b">Correct Answer: b) Imperative</div>
+        </div>
+
+        <div class="question">
+            <h3>24. When Java checks arrays for errors but runs slower, it shows:</h3>
+            <div class="options">
+                <label><input type="radio" name="q24" value="a"> a) Readability vs Writability</label>
+                <label><input type="radio" name="q24" value="b"> b) Reliability vs Execution cost</label>
+                <label><input type="radio" name="q24" value="c"> c) Portability vs Expressivity</label>
+                <label><input type="radio" name="q24" value="d"> d) Simplicity vs Orthogonality</label>
+            </div>
+            <div class="answer-box" id="answer24" data-correct-answer="b">Correct Answer: b) Reliability vs Execution cost</div>
+        </div>
+
+        <div class="question">
+            <h3>25. New software methods, like object-oriented development, affect programming language design.</h3>
+            <div class="options">
+                <label><input type="radio" name="q25" value="a"> a) True</label>
+                <label><input type="radio" name="q25" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer25" data-correct-answer="a">Correct Answer: a) True</div>
+        </div>
+
+        <div class="question">
+            <h3>26. APL has short, powerful code but hard to read — this shows:</h3>
+            <div class="options">
+                <label><input type="radio" name="q26" value="a"> a) Readability vs Writability</label>
+                <label><input type="radio" name="q26" value="b"> b) Reliability vs Cost</label>
+                <label><input type="radio" name="q26" value="c"> c) Portability vs Expressivity</label>
+                <label><input type="radio" name="q26" value="d"> d) Simplicity vs Orthogonality</label>
+            </div>
+            <div class="answer-box" id="answer26" data-correct-answer="a">Correct Answer: a) Readability vs Writability</div>
+        </div>
+
+        <div class="question">
+            <h3>27. The von Neumann bottleneck refers to:</h3>
+            <div class="options">
+                <label><input type="radio" name="q27" value="a"> a) Slow transfer between memory and storage</label>
+                <label><input type="radio" name="q27" value="b"> b) Speed limit between CPU and memory</label>
+                <label><input type="radio" name="q27" value="c"> c) CPU heating from processing</label>
+                <label><input type="radio" name="q27" value="d"> d) Delay from input/output devices</label>
+            </div>
+            <div class="answer-box" id="answer27" data-correct-answer="b">Correct Answer: b) Speed limit between CPU and memory</div>
+        </div>
+
+        <div class="question">
+            <h3>28. Which paradigm uses functions to compute results (like LISP, Scheme, F#)?</h3>
+            <div class="options">
+                <label><input type="radio" name="q28" value="a"> a) Object-oriented</label>
+                <label><input type="radio" name="q28" value="b"> b) Functional</label>
+                <label><input type="radio" name="q28" value="c"> c) Procedural</label>
+                <label><input type="radio" name="q28" value="d"> d) Logic</label>
+            </div>
+            <div class="answer-box" id="answer28" data-correct-answer="b">Correct Answer: b) Functional</div>
+        </div>
+
+        <div class="question">
+            <h3>29. Which programming paradigm is rule-based and uses languages like Prolog?</h3>
+            <div class="options">
+                <label><input type="radio" name="q29" value="a"> a) Functional</label>
+                <label><input type="radio" name="q29" value="b"> b) Logic</label>
+                <label><input type="radio" name="q29" value="c"> c) Procedural</label>
+                <label><input type="radio" name="q29" value="d"> d) Object-oriented</label>
+            </div>
+            <div class="answer-box" id="answer29" data-correct-answer="b">Correct Answer: b) Logic</div>
+        </div>
+
+        <div class="question">
+            <h3>30. Which languages are markup languages extended to support programming features?</h3>
+            <div class="options">
+                <label><input type="radio" name="q30" value="a"> a) C, Fortran</label>
+                <label><input type="radio" name="q30" value="b"> b) Prolog</label>
+                <label><input type="radio" name="q30" value="c"> c) JSTL, XSLT</label>
+                <label><input type="radio" name="q30" value="d"> d) LISP, Scheme</label>
+            </div>
+            <div class="answer-box" id="answer30" data-correct-answer="c">Correct Answer: c) JSTL, XSLT</div>
+        </div>
+
+        <div class="question">
+            <h3>31. "Cost" refers to:</h3>
+            <div class="options">
+                <label><input type="radio" name="q31" value="a"> a) How easy it is to create programs</label>
+                <label><input type="radio" name="q31" value="b"> b) How easy it is to understand programs</label>
+                <label><input type="radio" name="q31" value="c"> c) How dependable and error-free a language is</label>
+                <label><input type="radio" name="q31" value="d"> d) How fast the program executes</label>
+            </div>
+            <div class="answer-box" id="answer31" data-correct-answer="d">Correct Answer: d) How fast the program executes</div>
+        </div>
+
+        <div class="question">
+            <h3>32. What is portability in a language?</h3>
+            <div class="options">
+                <label><input type="radio" name="q32" value="a"> a) Works on many systems</label>
+                <label><input type="radio" name="q32" value="b"> b) Runs on one system only</label>
+                <label><input type="radio" name="q32" value="c"> c) Needs special hardware</label>
+                <label><input type="radio" name="q32" value="d"> d) Depends on one compiler</label>
+            </div>
+            <div class="answer-box" id="answer32" data-correct-answer="a@@Portability means a program can run on different systems with little or no modification. Example: A program written in C runs on Windows, Linux, and macOS with little or no change.">Correct Answer: a) Works on many systems<br>Explanation: Portability means a program can run on different systems with little or no modification. Example: A program written in C runs on Windows, Linux, and macOS with little or no change.</div>
+        </div>
+
+        <div class="question">
+            <h3>33. What does generality in a language mean?</h3>
+            <div class="options">
+                <label><input type="radio" name="q33" value="a"> a) Supports many kinds of applications</label>
+                <label><input type="radio" name="q33" value="b"> b) Works only for one task</label>
+                <label><input type="radio" name="q33" value="c"> c) Depends on one platform</label>
+                <label><input type="radio" name="q33" value="d"> d) Has limited data types</label>
+            </div>
+            <div class="answer-box" id="answer33" data-correct-answer="a@@Generality means a language can be used for various types of applications. Example: Python can do many tasks — web, data, AI, and more.">Correct Answer: a) Supports many kinds of applications<br>Explanation: Generality means a language can be used for various types of applications. Example: Python can do many tasks — web, data, AI, and more.</div>
+        </div>
+
+        <div class="question">
+            <h3>34. The well-definedness criterion ensures:</h3>
+            <div class="options">
+                <label><input type="radio" name="q34" value="a"> a) Code becomes short and simple</label>
+                <label><input type="radio" name="q34" value="b"> b) Faster hardware</label>
+                <label><input type="radio" name="q34" value="c"> c) Clear and predictable behavior</label>
+                <label><input type="radio" name="q34" value="d"> d) No runtime system</label>
+            </div>
+            <div class="answer-box" id="answer34" data-correct-answer="c@@Well-definedness ensures clear and predictable behavior of programs. Example: In Java, dividing by zero always gives an error, not random results.">Correct Answer: c) Clear and predictable behavior<br>Explanation: Well-definedness ensures clear and predictable behavior of programs. Example: In Java, dividing by zero always gives an error, not random results.</div>
+        </div>
+
+        <div class="question">
+            <h3>35. Portability is most strongly influenced by the degree of standardization of the language.</h3>
+            <div class="options">
+                <label><input type="radio" name="q35" value="a"> a) True</label>
+                <label><input type="radio" name="q35" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer35" data-correct-answer="a">Correct Answer: a) True</div>
+        </div>
+
+        <div class="question">
+            <h3>36. How does simplicity affect readability?</h3>
+            <div class="options">
+                <label><input type="radio" name="q36" value="a"> a) Greater simplicity increases readability</label>
+                <label><input type="radio" name="q36" value="b"> b) Simplicity decreases readability</label>
+                <label><input type="radio" name="q36" value="c"> c) Readability is unaffected</label>
+                <label><input type="radio" name="q36" value="d"> d) Simplicity improves hardware speed</label>
+            </div>
+            <div class="answer-box" id="answer36" data-correct-answer="a@@Greater simplicity increases readability. Example: total = price * quantity → easy to understand✅ vs t = p * q * (1 + 0) → confusing❌">Correct Answer: a) Greater simplicity increases readability<br>Explanation: Greater simplicity increases readability. Example: total = price * quantity → easy to understand vs t = p * q * (1 + 0) → confusing</div>
+        </div>
+
+        <div class="question">
+            <h3>37. An example of expressivity in a language is:</h3>
+            <div class="options">
+                <label><input type="radio" name="q37" value="a"> a) Writing long code for simple tasks</label>
+                <label><input type="radio" name="q37" value="b"> b) Using few or no operators</label>
+                <label><input type="radio" name="q37" value="c"> c) Doing complex work with simple code</label>
+                <label><input type="radio" name="q37" value="d"> d) Writing only in machine code</label>
+            </div>
+            <div class="answer-box" id="answer37" data-correct-answer="c@@Expressivity means doing complex work with simple code. Example: squares = [x*x for x in nums] does a complex task (create a list of squares) in one simple line">Correct Answer: c) Doing complex work with simple code<br>Explanation: Expressivity means doing complex work with simple code. Example: squares = [x*x for x in nums] does a complex task (create a list of squares) in one simple line</div>
+        </div>
+
+        <div class="question">
+            <h3>38. When two names refer to the same memory location, it's called:</h3>
+            <div class="options">
+                <label><input type="radio" name="q38" value="a"> a) Orthogonality</label>
+                <label><input type="radio" name="q38" value="b"> b) Aliasing</label>
+                <label><input type="radio" name="q38" value="c"> c) Expressivity</label>
+                <label><input type="radio" name="q38" value="d"> d) Portability</label>
+            </div>
+            <div class="answer-box" id="answer38" data-correct-answer="b@@Aliasing occurs when two names refer to the same memory location. Example: int x = 10; int *p = &x; // p and x refer to the same memory">Correct Answer: b) Aliasing<br>Explanation: Aliasing occurs when two names refer to the same memory location. Example: int x = 10; int *p = &x; // p and x refer to the same memory</div>
+        </div>
+
+        <div class="question">
+            <h3>39. The total cost of a programming language includes:</h3>
+            <div class="options">
+                <label><input type="radio" name="q39" value="a"> a) Training cost</label>
+                <label><input type="radio" name="q39" value="b"> b) Development cost</label>
+                <label><input type="radio" name="q39" value="c"> c) Maintenance cost</label>
+                <label><input type="radio" name="q39" value="d"> d) All of the above</label>
+            </div>
+            <div class="answer-box" id="answer39" data-correct-answer="d">Correct Answer: d) All of the above</div>
+        </div>
+
+        <div class="question">
+            <h3>40. C++ pointers are flexible but risky — this shows:</h3>
+            <div class="options">
+                <label><input type="radio" name="q40" value="a"> a) Readability vs Writability</label>
+                <label><input type="radio" name="q40" value="b"> b) Writability vs Reliability</label>
+                <label><input type="radio" name="q40" value="c"> c) Portability vs Expressivity</label>
+                <label><input type="radio" name="q40" value="d"> d) Simplicity vs Orthogonality</label>
+            </div>
+            <div class="answer-box" id="answer40" data-correct-answer="b">Correct Answer: b) Writability vs Reliability</div>
+        </div>
+
+        <div class="question">
+            <h3>41. Which method translates programs into machine code for large applications?</h3>
+            <div class="options">
+                <label><input type="radio" name="q41" value="a"> a) Interpretation</label>
+                <label><input type="radio" name="q41" value="b"> b) Compilation</label>
+                <label><input type="radio" name="q41" value="c"> c) Scripting</label>
+                <label><input type="radio" name="q41" value="d"> d) Markup</label>
+            </div>
+            <div class="answer-box" id="answer41" data-correct-answer="b">Correct Answer: b) Compilation</div>
+        </div>
+
+        <div class="question">
+            <h3>42. Which method runs programs using an interpreter and is good for small programs?</h3>
+            <div class="options">
+                <label><input type="radio" name="q42" value="a"> a) Compilation</label>
+                <label><input type="radio" name="q42" value="b"> b) Pure Interpretation</label>
+                <label><input type="radio" name="q42" value="c"> c) Scripting</label>
+                <label><input type="radio" name="q42" value="d"> d) Markup</label>
+            </div>
+            <div class="answer-box" id="answer42" data-correct-answer="b">Correct Answer: b) Pure Interpretation</div>
+        </div>
+
+        <div class="question">
+            <h3>43. What is a Hybrid Implementation System?</h3>
+            <div class="options">
+                <label><input type="radio" name="q43" value="a"> a) A system that only uses a compiler</label>
+                <label><input type="radio" name="q43" value="b"> b) A system that only uses an interpreter</label>
+                <label><input type="radio" name="q43" value="c"> c) A system that combines compilation and interpretation</label>
+                <label><input type="radio" name="q43" value="d"> d) A system that translates directly to machine code</label>
+            </div>
+            <div class="answer-box" id="answer43" data-correct-answer="c">Correct Answer: c) A system that combines compilation and interpretation</div>
+        </div>
+
+        <div class="question">
+            <h3>44. Which produces faster program execution?</h3>
+            <div class="options">
+                <label><input type="radio" name="q44" value="a"> a) Compiler</label>
+                <label><input type="radio" name="q44" value="b"> b) Pure Interpreter</label>
+                <label><input type="radio" name="q44" value="c"> c) Markup Processor</label>
+                <label><input type="radio" name="q44" value="d"> d) Loader Only</label>
+            </div>
+            <div class="answer-box" id="answer44" data-correct-answer="a">Correct Answer: a) Compiler</div>
+        </div>
+
+        <div class="question">
+            <h3>45. Which phase of compilation converts the source program into lexical units?</h3>
+            <div class="options">
+                <label><input type="radio" name="q45" value="a"> a) Syntax Analysis</label>
+                <label><input type="radio" name="q45" value="b"> b) Lexical Analysis</label>
+                <label><input type="radio" name="q45" value="c"> c) Semantic Analysis</label>
+                <label><input type="radio" name="q45" value="d"> d) Code Generation</label>
+            </div>
+            <div class="answer-box" id="answer45" data-correct-answer="b">Correct Answer: b) Lexical Analysis</div>
+        </div>
+
+        <div class="question">
+            <h3>46. Which phase converts lexical units into syntax trees (hierarchical structures)?</h3>
+            <div class="options">
+                <label><input type="radio" name="q46" value="a"> a) Lexical Analysis</label>
+                <label><input type="radio" name="q46" value="b"> b) Syntax Analysis</label>
+                <label><input type="radio" name="q46" value="c"> c) Semantic Analysis</label>
+                <label><input type="radio" name="q46" value="d"> d) Code Generation</label>
+            </div>
+            <div class="answer-box" id="answer46" data-correct-answer="b">Correct Answer: b) Syntax Analysis</div>
+        </div>
+
+        <div class="question">
+            <h3>47. Which phase generates intermediate code, often in assembly or similar language?</h3>
+            <div class="options">
+                <label><input type="radio" name="q47" value="a"> a) Lexical Analysis</label>
+                <label><input type="radio" name="q47" value="b"> b) Syntax Analysis</label>
+                <label><input type="radio" name="q47" value="c"> c) Semantic Analysis</label>
+                <label><input type="radio" name="q47" value="d"> d) Code Generation</label>
+            </div>
+            <div class="answer-box" id="answer47" data-correct-answer="c">Correct Answer: c) Semantic Analysis</div>
+        </div>
+
+        <div class="question">
+            <h3>48. Which phase produces the final machine code from intermediate code?</h3>
+            <div class="options">
+                <label><input type="radio" name="q48" value="a"> a) Lexical Analysis</label>
+                <label><input type="radio" name="q48" value="b"> b) Syntax Analysis</label>
+                <label><input type="radio" name="q48" value="c"> c) Semantic Analysis</label>
+                <label><input type="radio" name="q48" value="d"> d) Code Generation</label>
+            </div>
+            <div class="answer-box" id="answer48" data-correct-answer="d">Correct Answer: d) Code Generation</div>
+        </div>
+
+        <div class="question">
+            <h3>49. What is the correct order of the compilation process?</h3>
+            <div class="options">
+                <label><input type="radio" name="q49" value="a"> a) Syntax Analysis → Lexical Analysis → Semantic Analysis → Code Generation</label>
+                <label><input type="radio" name="q49" value="b"> b) Lexical Analysis → Syntax Analysis → Semantic Analysis → Code Generation</label>
+                <label><input type="radio" name="q49" value="c"> c) Code Generation → Semantic Analysis → Syntax Analysis → Lexical Analysis</label>
+                <label><input type="radio" name="q49" value="d"> d) Semantic Analysis → Lexical Analysis → Syntax Analysis → Code Generation</label>
+            </div>
+            <div class="answer-box" id="answer49" data-correct-answer="b">Correct Answer: b) Lexical Analysis → Syntax Analysis → Semantic Analysis → Code Generation</div>
+        </div>
+
+        <div class="question">
+            <h3>50. The three general methods of implementing a language are:</h3>
+            <div class="options">
+                <label><input type="radio" name="q50" value="a"> a) Compilation, Interpretation, Hybrid</label>
+                <label><input type="radio" name="q50" value="b"> b) XML, JSON, HTML</label>
+                <label><input type="radio" name="q50" value="c"> c) Parsing only</label>
+                <label><input type="radio" name="q50" value="d"> d) Encryption and Decryption</label>
+            </div>
+            <div class="answer-box" id="answer50" data-correct-answer="a">Correct Answer: a) Compilation, Interpretation, Hybrid</div>
+        </div>
+
+        <div class="question">
+            <h3>51. What does a linker do?</h3>
+            <div class="options">
+                <label><input type="radio" name="q51" value="a"> a) Executes machine instructions</label>
+                <label><input type="radio" name="q51" value="b"> b) Compiles source code</label>
+                <label><input type="radio" name="q51" value="c"> c) Runs the operating system</label>
+                <label><input type="radio" name="q51" value="d"> d) Combines object modules into an executable</label>
+            </div>
+            <div class="answer-box" id="answer51" data-correct-answer="d">Correct Answer: d) Combines object modules into an executable</div>
+        </div>
+
+        <div class="question">
+            <h3>52. On a von Neumann architecture, program execution follows:</h3>
+            <div class="options">
+                <label><input type="radio" name="q52" value="a"> a) Fetch–Decode–Execute cycle</label>
+                <label><input type="radio" name="q52" value="b"> b) Read–Write–Compile cycle</label>
+                <label><input type="radio" name="q52" value="c"> c) Load–Run–Store cycle</label>
+                <label><input type="radio" name="q52" value="d"> d) Parse–Render–Display cycle</label>
+            </div>
+            <div class="answer-box" id="answer52" data-correct-answer="a">Correct Answer: a) Fetch–Decode–Execute cycle</div>
+        </div>
+
+        <div class="question">
+            <h3>53. What is TRUE about Pure Interpretation?</h3>
+            <div class="options">
+                <label><input type="radio" name="q53" value="a"> a) It translates the whole program before running</label>
+                <label><input type="radio" name="q53" value="b"> b) It runs the program line by line without translation</label>
+                <label><input type="radio" name="q53" value="c"> c) It is always faster than compiled programs</label>
+                <label><input type="radio" name="q53" value="d"> d) It cannot show runtime errors</label>
+            </div>
+            <div class="answer-box" id="answer53" data-correct-answer="b">Correct Answer: b) It runs the program line by line without translation</div>
+        </div>
+
+        <div class="question">
+            <h3>54. A major advantage of a pure interpreter is:</h3>
+            <div class="options">
+                <label><input type="radio" name="q54" value="a"> a) Easier debugging and higher portability</label>
+                <label><input type="radio" name="q54" value="b"> b) Faster execution than compilers</label>
+                <label><input type="radio" name="q54" value="c"> c) No need for memory</label>
+                <label><input type="radio" name="q54" value="d"> d) Automatic optimization</label>
+            </div>
+            <div class="answer-box" id="answer54" data-correct-answer="a">Correct Answer: a) Easier debugging and higher portability</div>
+        </div>
+
+        <div class="question">
+            <h3>55. What is TRUE about compilers?</h3>
+            <div class="options">
+                <label><input type="radio" name="q55" value="a"> a) Slow translation, fast execution</label>
+                <label><input type="radio" name="q55" value="b"> b) Run code line by line</label>
+                <label><input type="radio" name="q55" value="c"> c) Skip errors</label>
+                <label><input type="radio" name="q55" value="d"> d) Used only for scripts</label>
+            </div>
+            <div class="answer-box" id="answer55" data-correct-answer="a">Correct Answer: a) Slow translation, fast execution</div>
+        </div>
+
+        <div class="question">
+            <h3>56. Hybrid systems are usually:</h3>
+            <div class="options">
+                <label><input type="radio" name="q56" value="a"> a) Slower than pure interpretation</label>
+                <label><input type="radio" name="q56" value="b"> b) Faster than pure interpretation</label>
+                <label><input type="radio" name="q56" value="c"> c) Slower than compilation</label>
+                <label><input type="radio" name="q56" value="d"> d) Not portable</label>
+            </div>
+            <div class="answer-box" id="answer56" data-correct-answer="b">Correct Answer: b) Faster than pure interpretation</div>
+        </div>
+
+        <div class="question">
+            <h3>57. Hybrid implementation translates programs directly into machine code.</h3>
+            <div class="options">
+                <label><input type="radio" name="q57" value="a"> a) True</label>
+                <label><input type="radio" name="q57" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer57" data-correct-answer="b@@Hybrid implementation = Compile to intermediate code → then interpret it.">Correct Answer: b) False<br>Explanation: Hybrid implementation = Compile to intermediate code → then interpret it.</div>
+        </div>
+
+        <div class="question">
+            <h3>58. What does a JIT system do at runtime?</h3>
+            <div class="options">
+                <label><input type="radio" name="q58" value="a"> a) Complies code while running</label>
+                <label><input type="radio" name="q58" value="b"> b) Runs line by line</label>
+                <label><input type="radio" name="q58" value="c"> c) Translates everything before running</label>
+                <label><input type="radio" name="q58" value="d"> d) Only checks syntax</label>
+            </div>
+            <div class="answer-box" id="answer58" data-correct-answer="a">Correct Answer: a) Complies code while running</div>
+        </div>
+
+        <div class="question">
+            <h3>59. JIT systems are widely used in:</h3>
+            <div class="options">
+                <label><input type="radio" name="q59" value="a"> a) Assembly language</label>
+                <label><input type="radio" name="q59" value="b"> b) Java programs</label>
+                <label><input type="radio" name="q59" value="c"> c) SQL databases</label>
+                <label><input type="radio" name="q59" value="d"> d) Operating systems only</label>
+            </div>
+            <div class="answer-box" id="answer59" data-correct-answer="b">Correct Answer: b) Java programs</div>
+        </div>
+
+        <div class="question">
+            <h3>60. JIT systems store the generated machine code to speed up future calls.</h3>
+            <div class="options">
+                <label><input type="radio" name="q60" value="a"> a) True</label>
+                <label><input type="radio" name="q60" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer60" data-correct-answer="a">Correct Answer: a) True</div>
+        </div>
+
+        <div class="question">
+            <h3>61. What is the main role of a preprocessor?</h3>
+            <div class="options">
+                <label><input type="radio" name="q61" value="a"> a) To execute the program at runtime</label>
+                <label><input type="radio" name="q61" value="b"> b) To process macros before compilation</label>
+                <label><input type="radio" name="q61" value="c"> c) To generate machine code</label>
+                <label><input type="radio" name="q61" value="d"> d) To debug runtime errors</label>
+            </div>
+            <div class="answer-box" id="answer61" data-correct-answer="b@@The preprocessor processes macros before compilation. Example: #include <stdio.h> #define P1 3.14 - The preprocessor replaces #include and #define before the compiler starts.">Correct Answer: b) To process macros before compilation<br>Explanation: The preprocessor processes macros before compilation. Example: #include <stdio.h> #define P1 3.14 - The preprocessor replaces #include and #define before the compiler starts.</div>
+        </div>
+
+        <div class="question">
+            <h3>62. UNIX is an old operating system that provides development tools.</h3>
+            <div class="options">
+                <label><input type="radio" name="q62" value="a"> a) True</label>
+                <label><input type="radio" name="q62" value="b"> b) False</label>
+            </div>
+            <div class="answer-box" id="answer62" data-correct-answer="a">Correct Answer: a) True</div>
+        </div>
+
+        <div class="question">
+            <h3>63. What is a programming environment?</h3>
+            <div class="options">
+                <label><input type="radio" name="q63" value="a"> a) A tool used only for debugging</label>
+                <label><input type="radio" name="q63" value="b"> b) A collection of tools for software development</label>
+                <label><input type="radio" name="q63" value="c"> c) A hardware device used to run programs</label>
+                <label><input type="radio" name="q63" value="d"> d) A database for storing code</label>
+            </div>
+            <div class="answer-box" id="answer63" data-correct-answer="b">Correct Answer: b) A collection of tools for software development</div>
+        </div>
+
+        <div class="question">
+            <h3>64. Which environment is commonly used for .NET applications?</h3>
+            <div class="options">
+                <label><input type="radio" name="q64" value="a"> a) UNIX</label>
+                <label><input type="radio" name="q64" value="b"> b) Visual Studio</label>
+                <label><input type="radio" name="q64" value="c"> c) NetBeans</label>
+                <label><input type="radio" name="q64" value="d"> d) GNOME</label>
+            </div>
+            <div class="answer-box" id="answer64" data-correct-answer="b">Correct Answer: b) Visual Studio</div>
+        </div>
+
+        <div class="question">
+            <h3>65. Which programming environment is mainly related to Java?</h3>
+            <div class="options">
+                <label><input type="radio" name="q65" value="a"> a) NetBeans</label>
+                <label><input type="radio" name="q65" value="b"> b) Visual Studio</label>
+                <label><input type="radio" name="q65" value="c"> c) UNIX</label>
+                <label><input type="radio" name="q65" value="d"> d) CDE</label>
+            </div>
+            <div class="answer-box" id="answer65" data-correct-answer="a">Correct Answer: a) NetBeans</div>
+        </div>
+
+        <div class="footer-note">
+            دعواتكم للمساعد الخفي والعاملين على الموقع بالتوفيق والسداد والزوجة الصالحة
+        </div>
+    </div>
+
+    <script>
+        function resetQuiz() {
+            const radioButtons = document.querySelectorAll('input[type="radio"]');
+            radioButtons.forEach(radio => radio.checked = false);
+
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                box.style.display = 'none';
+                box.classList.remove('correct', 'incorrect');
+                const correctAnswer = box.getAttribute('data-correct-answer');
+                if (correctAnswer) {
+                    const [answer, explanation] = correctAnswer.split('@@');
+                    box.innerHTML = `Correct Answer: ${answer}${explanation ? `<br>${explanation}` : ''}`;
+                }
+            });
+        }
+
+        function showAllAnswers() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                const [correctAnswer, explanation] = box.dataset.correctAnswer.split('@@');
+                box.innerHTML = `Correct Answer: ${correctAnswer}${explanation ? `<br>${explanation}` : ''}`;
+                box.style.display = 'block';
+                box.classList.add('correct');
+            });
+        }
+
+        function hideAllAnswers() {
+            const answerBoxes = document.querySelectorAll('.answer-box');
+            answerBoxes.forEach(box => {
+                box.style.display = 'none';
+                box.classList.remove('correct', 'incorrect');
+            });
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if(body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                themeToggle.innerHTML = '🌙 Dark Mode';
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '☀️ Light Mode';
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // Check for saved theme
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            const themeToggle = document.getElementById('themeToggle');
+            
+            if(savedTheme === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                themeToggle.innerHTML = '☀️ Light Mode';
+            }
+        });
+
+        // Add event listeners to radio buttons
+        const radioButtons = document.querySelectorAll('input[type="radio"]');
+        radioButtons.forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const questionNumber = e.target.name.substring(1);
+                const answerBox = document.getElementById(`answer${questionNumber}`);
+                const correctAnswerValue = answerBox.getAttribute('data-correct-answer');
+                const [correctAnswer, explanation] = correctAnswerValue.split('@@');
+                const userAnswer = e.target.value;
+
+                if (userAnswer === correctAnswer) {
+                    answerBox.innerHTML = `Correct!${explanation ? `<br>${explanation}` : ''}`;
+                    answerBox.classList.add('correct');
+                    answerBox.classList.remove('incorrect');
+                } else {
+                    answerBox.innerHTML = `Incorrect. Correct Answer: ${correctAnswer}${explanation ? `<br>${explanation}` : ''}`;
+                    answerBox.classList.add('incorrect');
+                    answerBox.classList.remove('correct');
+                }
+                answerBox.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
